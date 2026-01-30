@@ -1,0 +1,5 @@
+**/*.xcodeproj/xcuserdata
+**/*.xcodeproj/project.xcworkspace/xcuserdata
+**/SQLite-Decimal/sqlite3.c
+**/SQLite-Decimal/sqlite3.h
+build

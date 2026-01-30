@@ -1,0 +1,4 @@
+module sqlite_ios_decimal {
+    header "sqlite3.h"
+    export *
+}

@@ -1,0 +1,437 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildRule section */
+		87D8E46D2F2E449800F386CB /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = sqlite3.c;
+			fileType = pattern.proxy;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+			);
+			runOncePerArchitecture = 0;
+			script = "echo \"*** Patching sqlite3.c\"\n";
+		};
+		87D8E46E2F2E449900F386CB /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.download";
+			fileType = pattern.proxy;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILE_DIR)/Sqlite/${INPUT_FILE_BASE}",
+			);
+			runOncePerArchitecture = 0;
+			script = "OUTPUT_DIR=\"${DERIVED_FILE_DIR}/SQLite\"\nOUTPUT_FILE=\"${OUTPUT_DIR}/${INPUT_FILE_BASE}\"\n\n# 1. Ensure the subdirectory exists\nmkdir -p \"$OUTPUT_DIR\"\n\n# 2. Read the url from the file\nDOWNLOAD_URL=`cat ${INPUT_FILE_PATH}`\n\ncurl -LsSf -o $OUTPUT_FILE $DOWNLOAD_URL\n\n# 3. Optional: Print the result for debugging\necho \"Downloaded file written to: $OUTPUT_FILE\"\n";
+		};
+		87D8E47C2F2E895A00F386CB /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.script";
+			fileType = pattern.proxy;
+			inputFiles = (
+				"SQLite-Decimal/patches/sqlite3.c.patch",
+			);
+			isEditable = 1;
+			outputFiles = (
+				"${DERIVED_FILE_DIR}/SQLite/sqlite3.c",
+				"${DERIVED_FILE_DIR}/SQLite/Headers/sqlite3.h",
+				"${DERIVED_FILE_DIR}/SQLite/sqlite3ext.h",
+			);
+			runOncePerArchitecture = 0;
+			script = "OUTPUT_DIR=\"${DERIVED_FILE_DIR}/SQLite\"\n\n# 1. Ensure the subdirectory exists\nmkdir -p \"$OUTPUT_DIR\" \n\n# 2. Execute script\n. ${INPUT_FILE_PATH} \"$OUTPUT_DIR\" \"SQLite-Decimal/patches\"\n";
+		};
+/* End PBXBuildRule section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		87FE67032F2C98850068268A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		87FE67052F2C98850068268A /* libsqlite-ios-decimal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libsqlite-ios-decimal.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		87D8E47E2F2E8B9100F386CB /* Exceptions for "SQLite-Decimal" folder in "Compile Sources" phase from "sqlite-ios-decimal" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 87FE67012F2C98850068268A /* Sources */;
+			membershipExceptions = (
+				decimal.c.download,
+				sqlite.script,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		87FE67072F2C98850068268A /* SQLite-Decimal */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				87D8E47E2F2E8B9100F386CB /* Exceptions for "SQLite-Decimal" folder in "Compile Sources" phase from "sqlite-ios-decimal" target */,
+			);
+			path = "SQLite-Decimal";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		87FE67022F2C98850068268A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		87FE66FC2F2C98850068268A = {
+			isa = PBXGroup;
+			children = (
+				87FE67072F2C98850068268A /* SQLite-Decimal */,
+				87FE67062F2C98850068268A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		87FE67062F2C98850068268A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				87FE67052F2C98850068268A /* libsqlite-ios-decimal.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		87FE67152F2C995F0068268A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		87FE67042F2C98850068268A /* sqlite-ios-decimal */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 87FE670F2F2C98850068268A /* Build configuration list for PBXNativeTarget "sqlite-ios-decimal" */;
+			buildPhases = (
+				87FE67152F2C995F0068268A /* Headers */,
+				87FE67012F2C98850068268A /* Sources */,
+				87FE67022F2C98850068268A /* Frameworks */,
+				87FE67032F2C98850068268A /* CopyFiles */,
+			);
+			buildRules = (
+				87D8E47C2F2E895A00F386CB /* PBXBuildRule */,
+				87D8E46E2F2E449900F386CB /* PBXBuildRule */,
+				87D8E46D2F2E449800F386CB /* PBXBuildRule */,
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				87FE67072F2C98850068268A /* SQLite-Decimal */,
+			);
+			name = "sqlite-ios-decimal";
+			packageProductDependencies = (
+			);
+			productName = "sqlite-ios-decimal";
+			productReference = 87FE67052F2C98850068268A /* libsqlite-ios-decimal.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		87FE66FD2F2C98850068268A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 2620;
+				TargetAttributes = {
+					87FE67042F2C98850068268A = {
+						CreatedOnToolsVersion = 26.2;
+					};
+				};
+			};
+			buildConfigurationList = 87FE67002F2C98850068268A /* Build configuration list for PBXProject "sqlite-ios-decimal" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 87FE66FC2F2C98850068268A;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 87FE67062F2C98850068268A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				87FE67042F2C98850068268A /* sqlite-ios-decimal */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		87FE67012F2C98850068268A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		87FE670D2F2C98850068268A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = V6D45AQ77S;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HAVE_USLEEP=1",
+					SQLITE_HAVE_ISNAN,
+					"SQLITE_DEFAULT_JOURNAL_SIZE_LIMIT=1048576",
+					"SQLITE_THREADSAFE=2",
+					"SQLITE_TEMP_STORE=3",
+					"SQLITE_POWERSAFE_OVERWRITE=1",
+					"SQLITE_DEFAULT_FILE_FORMAT=4",
+					"SQLITE_DEFAULT_AUTOVACUUM=1",
+					"SQLITE_ENABLE_MEMORY_MANAGEMENT=1",
+					SQLITE_ENABLE_FTS3,
+					SQLITE_ENABLE_FTS3_PARENTHESIS,
+					SQLITE_ENABLE_FTS4,
+					SQLITE_ENABLE_FTS4_PARENTHESIS,
+					SQLITE_ENABLE_FTS5,
+					SQLITE_ENABLE_FTS5_PARENTHESIS,
+					SQLITE_ENABLE_JSON1,
+					"SQLITE_ENABLE_RTREE=1",
+					SQLITE_UNTESTABLE,
+					"SQLITE_DEFAULT_FILE_PERMISSIONS=0600",
+					"SQLITE_DEFAULT_MEMSTATUS=0",
+					"SQLITE_MAX_EXPR_DEPTH=0",
+					SQLITE_USE_ALLOCA,
+					SQLITE_ENABLE_BATCH_ATOMIC_WRITE,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					SQLITE_ENABLE_MATH_FUNCTIONS,
+					"SQLITE_OMIT_LOAD_EXTENSION=0",
+					SQLITE_ENABLE_DECIMAL,
+					"SQLITE_EXTRA_INIT=sqlite3_decimal_extension_init",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SQLITE_VERSION = 3.51.2;
+			};
+			name = Debug;
+		};
+		87FE670E2F2C98850068268A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = V6D45AQ77S;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HAVE_USLEEP=1",
+					SQLITE_HAVE_ISNAN,
+					"SQLITE_DEFAULT_JOURNAL_SIZE_LIMIT=1048576",
+					"SQLITE_THREADSAFE=2",
+					"SQLITE_TEMP_STORE=3",
+					"SQLITE_POWERSAFE_OVERWRITE=1",
+					"SQLITE_DEFAULT_FILE_FORMAT=4",
+					"SQLITE_DEFAULT_AUTOVACUUM=1",
+					"SQLITE_ENABLE_MEMORY_MANAGEMENT=1",
+					SQLITE_ENABLE_FTS3,
+					SQLITE_ENABLE_FTS3_PARENTHESIS,
+					SQLITE_ENABLE_FTS4,
+					SQLITE_ENABLE_FTS4_PARENTHESIS,
+					SQLITE_ENABLE_FTS5,
+					SQLITE_ENABLE_FTS5_PARENTHESIS,
+					SQLITE_ENABLE_JSON1,
+					"SQLITE_ENABLE_RTREE=1",
+					SQLITE_UNTESTABLE,
+					"SQLITE_DEFAULT_FILE_PERMISSIONS=0600",
+					"SQLITE_DEFAULT_MEMSTATUS=0",
+					"SQLITE_MAX_EXPR_DEPTH=0",
+					SQLITE_USE_ALLOCA,
+					SQLITE_ENABLE_BATCH_ATOMIC_WRITE,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					SQLITE_ENABLE_MATH_FUNCTIONS,
+					"SQLITE_OMIT_LOAD_EXTENSION=0",
+					SQLITE_ENABLE_DECIMAL,
+					"SQLITE_EXTRA_INIT=sqlite3_decimal_extension_init",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SQLITE_VERSION = 3.51.2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		87FE67102F2C98850068268A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V6D45AQ77S;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		87FE67112F2C98850068268A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V6D45AQ77S;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"NDEBUG=1",
+					"$(inherited)",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		87FE67002F2C98850068268A /* Build configuration list for PBXProject "sqlite-ios-decimal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87FE670D2F2C98850068268A /* Debug */,
+				87FE670E2F2C98850068268A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		87FE670F2F2C98850068268A /* Build configuration list for PBXNativeTarget "sqlite-ios-decimal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87FE67102F2C98850068268A /* Debug */,
+				87FE67112F2C98850068268A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 87FE66FD2F2C98850068268A /* Project object */;
+}
